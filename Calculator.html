@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Calculator</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+	<style>
+		html {
+			height:100%;
+		}
+		body {
+			font-family:Arvo;
+			font-size:25px;
+			background-color:black;
+			color:lime;
+			background-attachment: fixed;
+			background: linear-gradient(
+  				to bottom,
+  				#504297,
+  				#504297 50%,
+  				#4B38A9 50%,
+  				#4B38A9
+			);
+			background-size: 100% 10px;
+		}
+		.hideStuff {
+			display:none;
+		}
+		.text-primary {
+			color:#F3ECEC;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function onLoadingPage() {
+			$("#operation").prop("selectedIndex","-1");
+			$("#resultsId").hide();
+		}
+		function performOperation () {
+			var operation=$("#operation")[0].value;
+			if (operation=="Addition") {
+				$("#resultDiv").show();
+				$("#result").prop("value",parseFloat($("#nbr1").val())+parseFloat($("#nbr2").val()));
+			} else if (operation=="Subtraction") {
+				$("#resultDiv").show();
+				$("#result").prop("value",parseFloat($("#nbr1").val())-parseFloat($("#nbr2").val()));
+			} else if (operation=="Multiplication") {
+				$("#resultDiv").show();
+				$("#result").prop("value",parseFloat($("#nbr1").val())*parseFloat($("#nbr2").val()));
+			} else if (operation=="Division") {
+				$("#resultDiv").show();
+				$("#result").prop("value",parseFloat($("#nbr1").val())/parseFloat($("#nbr2").val()));
+			} else if (operation="SquareRoot") {
+				$("#resultDiv").show();
+				$("#result").prop("value",Math.sqrt(parseFloat($("#nbr1").val())));
+			}
+		}
+		function loadInputs() {
+			$("#nbr1").val("");
+			$("#nbr2").val("");
+			var operation=$("#operation")[0].value;
+			$("#resultsId").show();
+			$("#resultDiv").hide();
+			if (operation=="Addition"||operation=="Subtraction"||operation=="Multiplication"||operation=="Division") {
+				$("#nbr1Label").text("Enter Number 1");
+				$("#nbr2Label").text("Enter Number 2");
+			} else if (opeartion="SquareRoot") {
+				$("#nbr1Label").text("Enter a number");
+				$("#nbr2Main").hide();
+			}
+		}
+		$(document).ready (function() {
+			$("#clearButtonId").click(function(e) {
+				e.preventDefault();
+				$(this).closest("form")[0].reset;
+				onClickOfClear();
+			});
+		});
+		function onClickOfClear() {
+			$("#resultsId").hide();
+			$("#nbr1").val("");
+			$("#nbr2").val("");
+			$("#operation").prop("selectedIndex","-1");
+		}
+	</script>
+</head>
+	<body onload="onLoadingPage();">
+		<div class="container text-center">
+			<h1 class="text-primary">Calculator</h1>
+			<div class="row">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="control-label col-md-5" for="operation">Operation </label>
+						<div class="col-md-4">
+							<select class="form-control input-lg" id="operation" onchange="loadInputs();">
+								<option value="Addition">Addition</option>
+								<option value="Subtraction">Subtraction</option>
+								<option value="Multiplication">Multiplication</option>
+								<option value="Division">Division</option>
+								<option value="SquareRoot">Square Root</option>
+							</select>						
+						</div>
+					</div>
+					<div id="resultsId">
+						<div class="form-group" id="nbr1Main">
+							<label class="control-label col-md-5" id="nbr1Label" for="nbr1">Enter a number</label>
+							<div class="col-md-4">
+								<input class="form-control input-lg" type="number" placeholder="Enter a number" id="nbr1">
+							</div>
+						</div>
+						<div class="form-group" id="nbr2Main">
+							<label class="control-label col-md-5" id="nbr2Label" for="nbr2">Enter a number</label>
+							<div class="col-md-4">
+								<input class="form-control input-lg" type="number" placeholder="Enter a number" id="nbr2">
+							</div>
+						</div>
+						<div class="control-group form-group" id="buttons">
+							<div class="col-md-12">
+								<button class="btn btn-primary btn-large" onclick="performOperation();" type="button"><b class="fa fa-paper-plane controls"> Calculate</b></button>
+								<button class="btn btn-danger btn-large" id="clearButtonId" onclick="onClickOfClear();" type="reset"><b class="fa fa-trash"> Clear</b></button>
+							</div>
+						</div>
+						<div class="" id="resultDiv">
+							<hr/>
+							<div class="form-group">
+								<label for="result" class="control-label col-md-5">Result: </label>
+								<div class="col-md-4">
+									<input class="form-control input-lg" type="number" id="result" disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
